@@ -1,1 +1,1 @@
-# shiyuu_sub
+# shiyuu自用clash规则
