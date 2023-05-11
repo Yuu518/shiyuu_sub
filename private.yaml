@@ -202,5 +202,5 @@ rules:
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,Steam,Steam
   - RULE-SET,OpenAI,ChatGPT
-  - RULE-SET,ChinaMax,DIRECT,no-resolve
+  - RULE-SET,ChinaMax,DIRECT
   - MATCH,FINAL
