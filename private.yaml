@@ -34,6 +34,7 @@ dns:
   fake-ip-filter: 
   - '*'
   - '+.lan'
+  - 'localhost.ptlogin2.qq.com'
   default-nameserver:
     - 223.5.5.5
     - 1.0.0.1
