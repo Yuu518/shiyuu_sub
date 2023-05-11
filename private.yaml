@@ -192,7 +192,7 @@ rule-providers:
 
 rules:
   - RULE-SET,Lan,DIRECT
-  - GEOSITE,category-ads-all,REJECT
+#  - GEOSITE,category-ads-all,REJECT
   - RULE-SET,Telegram,Telegram
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Netflix,Netflix
@@ -202,5 +202,5 @@ rules:
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,Steam,Steam
   - RULE-SET,OpenAI,ChatGPT
-  - RULE-SET,ChinaMax,DIRECT
+  - RULE-SET,ChinaMax,DIRECT,no-resolve
   - MATCH,FINAL
