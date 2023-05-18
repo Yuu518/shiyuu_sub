@@ -36,11 +36,10 @@ dns:
   - '+.lan'
   - 'localhost.ptlogin2.qq.com'
   default-nameserver:
-    - 223.5.5.5
-    - 1.0.0.1
+    - 119.29.29.29
   nameserver:
-    - https://dns.alidns.com/dns-query
     - https://dns.pub/dns-query
+    - https://dns.alidns.com/dns-query
   fallback:
     - https://dns.cloudflare.com/dns-query
     - tls://dns.google:853
