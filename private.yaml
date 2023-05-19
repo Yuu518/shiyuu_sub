@@ -5,7 +5,7 @@ geodata-mode: true
 log-level: info
 ipv6: false
 external-controller: 127.0.0.1:9090
-external-ui: dashboard
+#external-ui: dashboard
 
 #geox-url:
   #geoip: "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
