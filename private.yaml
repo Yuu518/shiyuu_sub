@@ -1,7 +1,7 @@
 port: 7890
 allow-lan: true
 mode: rule
-geodata-mode: true
+geodata-mode: false
 log-level: info
 ipv6: false
 external-controller: 127.0.0.1:9090
