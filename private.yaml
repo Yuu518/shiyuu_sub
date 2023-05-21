@@ -51,7 +51,7 @@ proxies:
 p: &p
   {type: http, interval: 3600, health-check: {enable: true, url: http://cp.cloudflare.com, interval: 300}}
 pr: &pr
-  {type: select, proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  {type: select, proxies: [节点选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
 
 u: &u
   type: select
@@ -72,7 +72,7 @@ proxy-providers:
 
 proxy-groups:
 
-  - {name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  - {name: 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
 
   - {name: Telegram, <<: *pr}
 
