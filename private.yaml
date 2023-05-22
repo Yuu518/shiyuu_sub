@@ -202,4 +202,5 @@ rules:
   - RULE-SET,Steam,Steam
   - RULE-SET,OpenAI,ChatGPT
   - RULE-SET,ChinaMax,DIRECT
+  - GEOIP,CN,DIRECT
   - MATCH,FINAL
