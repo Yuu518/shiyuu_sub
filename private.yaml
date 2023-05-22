@@ -191,7 +191,6 @@ rule-providers:
 
 rules:
   - RULE-SET,Lan,DIRECT
-#  - GEOSITE,category-ads-all,REJECT
   - RULE-SET,Telegram,Telegram
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Netflix,Netflix
