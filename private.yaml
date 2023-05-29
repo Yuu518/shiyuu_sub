@@ -45,12 +45,26 @@ dns:
   fallback-filter:
     geoip: true
     geoip-code: CN
+    ipcidr:
+       - 240.0.0.0/4
+       - 0.0.0.0/32
+       - 127.0.0.1/32
+     domain:
+       - +.google.com
+       - +.facebook.com
+       - +.twitter.com
+       - +.youtube.com
+       - +.xn--ngstr-lra8j.com
+       - +.google.cn
+       - +.googleapis.cn
+       - +.googleapis.com
+       - +.gvt1.com
         
 proxies:
 p: &p
   {type: http, interval: 3600, health-check: {enable: true, url: http://cp.cloudflare.com, interval: 300}}
 pr: &pr
-  {type: select, proxies: [节点选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  {type: select, proxies: [Proxise, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
 
 u: &u
   type: select
@@ -71,7 +85,7 @@ proxy-providers:
 
 proxy-groups:
 
-  - {name: 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  - {name: Proxise, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
 
   - {name: Telegram, <<: *pr}
 
