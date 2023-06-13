@@ -18,7 +18,7 @@
                "tag": "dnspod",
                "address": "119.29.29.29",
                "strategy": "prefer_ipv4",
-               "detour": "direct"
+               "detour": "Direct"
             },
             {
                 "tag": "cloudflare_ip",
@@ -239,7 +239,7 @@
             "tag": "BiliBili",
             "type": "selector",
             "outbounds": [
-                "direct",
+                "Direct",
                 "Kuromis·HK",
                 "Kuromis·TW",
                 "Paoluz·HK",
@@ -265,15 +265,15 @@
         },
         {
             "type": "direct",
-            "tag": "direct"
+            "tag": "Direct"
         },
         {
             "type": "block",
-            "tag": "block"
+            "tag": "Block"
         },
         {
             "type": "dns",
-            "tag": "dns-out"
+            "tag": "Dns-out"
         }
     ],
     "route": {
@@ -290,14 +290,14 @@
         "rules": [
             {
                 "geoip": "private",
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "domain_keyword": [
                     "biligame",
                     "bilibiligame"
                 ],
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "geosite": "telegram",
@@ -347,15 +347,15 @@
             },
             {
                 "protocol": "dns",
-                "outbound": "dns-out"
+                "outbound": "Dns-out"
             },
             {
                 "geosite": "cn",
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "geoip": "cn",
-                "outbound": "direct"
+                "outbound": "Direct"
             }
         ],
         "final": "Proxy",
