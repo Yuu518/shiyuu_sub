@@ -2,7 +2,7 @@
     "log": {
         "disabled": false,
         "level": "info",
-        "output": "box.log",
+        //"output": "box.log",
         "timestamp": true
     },
     "dns": {
@@ -10,33 +10,26 @@
             {
                 "tag": "cloudflare",
                 "address": "https://dns.cloudflare.com/dns-query",
-                "address_resolver": "cloudflare_ip",
-                "strategy": "prefer_ipv4", 
+                "address_resolver": "CF",
                 "detour": "Proxy"
             },
             {
                "tag": "dnspod",
                "address": "119.29.29.29",
-               "strategy": "prefer_ipv4",
                "detour": "Direct"
             },
             {
-                "tag": "cloudflare_ip",
-                "address": "1.0.0.1",
-                "strategy": "prefer_ipv4",
-                "detour": "Proxy"
-             },
-             {
+                "tag": "CF",
+                "address": "1.1.1.1"
+            }, 
+            {
                 "tag": "fakedns",
                 "address": "fakeip"
-              }
- 
+            }
         ],
         "rules": [
             {
-               "outbound":[
-                   "any"
-                ],
+               "outbound": "any",
                "server": "dnspod",
                "disable_cache": true
             },
@@ -47,43 +40,36 @@
                 "server": "dnspod"
             },
             {
-                "query_type": [
-                  "A",
-                  "AAAA"
-                ],
-                "server": "fakedns"
+                 "query_type": [
+                   "A",
+                   "AAAA"
+                 ],
+                 "server": "fakedns"
             }
         ],
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/15",
             "inet6_range": "fc00::/18"
-          }
+        },
+        "independent_cache": true,
+        "strategy": "ipv4_only"
     },
     "inbounds": [
     {
-        "type": "tun",
-        "tag": "SingBox",
-        "inet4_address": "172.19.0.1/30",
-        //"inet6_address": "fdfe:dcba:9876::1/126",
-        "mtu": 9000,
-        "auto_route": true,
-        "strict_route": true,
-        "stack": "system",
-        "sniff": true
+         "type": "tun",
+         "tag": "SingBox",
+         "interface_name": "SingBox",
+         "inet4_address": "172.19.0.1/30",
+         "auto_route": true,
+         "stack": "system",
+         "sniff": false
     }
-        //{
-        //    "type": "tproxy",
-        //    "tag": "tproxy-in",
-        //    "listen": "::",
-        //    "listen_port": 1536,
-        //    "sniff": true
-        //}
     ],
     "proxyproviders": [
         {
             "tag": "Kuromis",
-            "url": "",
+            "url": "https://",
             "cache_file": "./proxy_providers/Kuromis.cache",
             "force_update": "24h",
             "filter": {
@@ -130,7 +116,7 @@
         },
         {
             "tag": "Paoluz",
-            "url": "",
+            "url": "https://",
             "cache_file": "./proxy_providers/Paoluz.cache", 
             "force_update": "24h", 
             "custom_group": [
@@ -279,15 +265,19 @@
     "route": {
         "geoip": {
             "path": "geoip.db",
-            "download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geoip.db",
+            "download_url": "https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geoip.db",
             "download_detour": "Proxy"
         },
         "geosite": {
             "path": "geosite.db",
-            "download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geosite.db",
+            "download_url": "https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geosite.db",
             "download_detour": "Proxy"
         },
         "rules": [
+            {
+                "port": 53,
+                "outbound": "Dns-out"
+              },        
             {
                 "geoip": "private",
                 "outbound": "Direct"
@@ -359,13 +349,14 @@
             }
         ],
         "final": "Proxy",
+        "find_process": true,
         "auto_detect_interface": true
     },
     "experimental": {
         "clash_api": {
             "external_controller": "[::]:9090",
+            "secret": "",
             "external_ui_build_in": true,
-            "external_ui": "./dashboard",
             "default_mode": "rule",
             "store_selected": true,
             "cache_file": "cache.db"
