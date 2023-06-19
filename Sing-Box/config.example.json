@@ -34,12 +34,6 @@
                "disable_cache": true
             },
             {
-               "geosite": [
-                   "cn"
-                ],
-                "server": "dnspod"
-            },
-            {
                  "query_type": [
                    "A",
                    "AAAA"
