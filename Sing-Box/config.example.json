@@ -15,7 +15,7 @@
             },
             {
                "tag": "dnspod",
-               "address": "119.29.29.29",
+               "address": "https://1.12.12.12/dns-query",
                "detour": "Direct"
             },
             {
@@ -57,7 +57,7 @@
          "inet4_address": "172.19.0.1/30",
          "auto_route": true,
          "stack": "system",
-         "sniff": false
+         "sniff": true
     }
     ],
     "proxyproviders": [
@@ -219,11 +219,28 @@
             "tag": "BiliBili",
             "type": "selector",
             "outbounds": [
-                "Direct",
                 "Kuromis·HK",
                 "Kuromis·TW",
                 "Paoluz·HK",
+                "Paoluz·TW",
+                "Direct"
+            ]
+        },
+        {
+            "tag": "Bahamut",
+            "type": "selector",
+            "outbounds": [
+                "Kuromis·TW",
                 "Paoluz·TW"
+            ]
+        },
+        {
+            "tag": "Steam",
+            "type": "selector",
+            "outbounds": [
+                "Proxy",
+                "Paoluz",
+                "Direct"
             ]
         },
         {
@@ -232,15 +249,6 @@
             "outbounds": [
                 "Kuromis·US",
                 "Paoluz·US"
-            ]
-        },
-
-        {
-            "tag": "Bahamut",
-            "type": "selector",
-            "outbounds": [
-                "Kuromis·TW",
-                "Paoluz·TW"
             ]
         },
         {
@@ -269,7 +277,8 @@
         },
         "rules": [
             {
-                "port": 53,
+                //"port": 53,//Sniff关闭使用
+                "protocol": "dns",//Sniff开启时使用
                 "outbound": "Dns-out"
               },        
             {
@@ -322,7 +331,7 @@
             {
                 "geosite": "steam",
                 "geoip": "steam",
-                "outbound": "Proxy"
+                "outbound": "Steam"
             },
             {
                 "geosite": "openai",
