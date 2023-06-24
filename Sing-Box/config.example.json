@@ -353,7 +353,7 @@
         ],
         "final": "Proxy",
         "find_process": true,
-        "default_interface": "WLAN"
+        "auto_detect_interface": "true"
     },
     "experimental": {
         "clash_api": {
