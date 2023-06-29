@@ -1,0 +1,561 @@
+{
+		"log": {
+				"disabled": false,
+				"level": "info",
+		//    "output": "box.log",
+				"timestamp": true
+		},
+		"dns": {
+				"servers": [
+						{
+							"tag": "cloudflare",
+							"address": "https://dns.cloudflare.com/dns-query",
+							"address_resolver": "CF",
+							"detour": "Proxy"
+						},
+						{
+							"tag": "dnspod",
+							"address": "https://1.12.12.12/dns-query",
+							"detour": "Direct"
+						},
+						{
+							"tag": "CF",
+							"address": "1.1.1.1"
+						},
+						{
+							"tag": "fakedns",
+							"address": "fakeip"
+						}
+				],
+				"rules": [
+						{
+							 "outbound": "any",
+							 "server": "dnspod",
+							 "disable_cache": true
+						},
+						{
+							"query_type": [
+								"A",
+								"AAAA"
+							],
+							"server": "fakedns"
+						}
+				],
+				"fakeip": {
+						"enabled": true,
+						"inet4_range": "198.18.0.0/15",
+						"inet6_range": "fc00::/18"
+				},
+				"independent_cache": true,
+				"strategy": "ipv4_only"
+		},
+		"inbounds": [
+		{
+				"type": "tun",
+				"tag": "SingBox",
+				"interface_name": "SingBox",
+				"inet4_address": "172.19.0.1/30",
+				"inet6_address": "fdfe:dcba:9876::1/126",
+				"auto_route": true,
+				"strict_route": false,
+				"stack": "system",
+				"sniff": true
+		}
+		],
+	"proxyproviders": [
+		{
+			"tag": "Kuromis",
+			"url": "",
+			"cache_file": "./proxy_providers/Kuromis.cache",
+			"force_update": "24h",
+			"tag_format": "[Kuromis]%s",
+			"filter": {
+				"rule": [
+					"GB",
+					"Traffic Reset",
+					"Expire Date",
+					"Premium"
+				],
+				"white_mode": false
+			},
+
+			"custom_group": [
+				{
+					"tag": "Kuromis·HK",
+					"type": "selector",
+					"rule": [ "Hong Kong" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Kuromis·TW",
+					"type": "selector",
+					"rule": [ "Taiwan" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Kuromis·Singapore",
+					"type": "selector",
+					"rule": [ "Singapore" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Kuromis·JP",
+					"type": "selector",
+					"rule": [ "Japan" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Kuromis·US",
+					"type": "selector",
+					"rule": [
+						"United States",
+						"USA"
+					],
+					"white_mode": true
+				}
+			]
+		},
+		{
+			"tag": "Nexitally",
+			"url": "",
+			"cache_file": "./proxy_providers/Nexitally.cache",
+			"force_update": "24h",
+			"tag_format": "[Nexitally]%s",
+			"filter": {
+				"rule": [
+					"GB",
+					"Traffic Reset",
+					"Expire Date",
+					"Premium"
+				],
+				"white_mode": false
+			},
+
+			"custom_group": [
+				{
+					"tag": "Nexitally·HK",
+					"type": "selector",
+					"rule": [ "Hong Kong" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Nexitally·TW",
+					"type": "selector",
+					"rule": [ "Taiwan" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Nexitally·Singapore",
+					"type": "selector",
+					"rule": [ "Singapore" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Nexitally·JP",
+					"type": "selector",
+					"rule": [ "Japan" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Nexitally·US",
+					"type": "selector",
+					"rule": [
+						"United States",
+						"USA"
+					],
+					"white_mode": true
+				}
+			]
+		},
+		{
+			"tag": "Paoluz",
+			"url": "",
+			"cache_file": "./proxy_providers/Paoluz.cache",
+			"force_update": "24h",
+			"custom_group": [
+				{
+					"tag": "Paoluz·HK",
+					"type": "selector",
+					"rule": [ "香港" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Paoluz·TW",
+					"type": "selector",
+					"rule": [ "台湾" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Paoluz·Singapore",
+					"type": "selector",
+					"rule": [ "新加坡" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Paoluz·JP",
+					"type": "selector",
+					"rule": [ "日本" ],
+					"white_mode": true
+				},
+				{
+					"tag": "Paoluz·US",
+					"type": "selector",
+					"rule": [ "美国" ],
+					"white_mode": true
+				}
+			]
+		}
+	],
+		"outbounds": [
+				{
+						"tag": "Proxy",
+						"type": "selector",
+						"outbounds": [
+							"Kuromis·HK",
+							"Nexitally·HK",
+							"Paoluz·HK",
+							"Kuromis·TW",
+							"Nexitally·TW",
+							"Paoluz·TW",
+							"Kuromis·Singapore",
+							"Nexitally·Singapore",
+							"Paoluz·Singapore",
+							"Kuromis·JP",
+							"Nexitally·JP",
+							"Paoluz·JP",
+							"Kuromis·US",
+							"Nexitally·US",
+							"Paoluz·US",
+							"自建"
+					]
+				},
+				{
+						"tag": "YouTube",
+						"type": "selector",
+						"outbounds": [
+						 "Proxy",
+						 "Kuromis·HK",
+						 "Nexitally·HK",
+						 "Paoluz·HK",
+						 "Kuromis·TW",
+						 "Nexitally·TW",
+						 "Paoluz·TW",
+						 "Kuromis·Singapore",
+						 "Nexitally·Singapore",
+						 "Paoluz·Singapore",
+						 "Kuromis·JP",
+						 "Nexitally·JP",
+						 "Paoluz·JP",
+						 "Kuromis·US",
+						 "Nexitally·US",
+						 "Paoluz·US"
+				 ]
+				},
+				{
+						"tag": "Netflix",
+						"type": "selector",
+						"outbounds": [
+							"Kuromis·Singapore",
+							"Nexitally·Singapore",
+							"Paoluz·Singapore",
+							"Kuromis·JP",
+							"Nexitally·JP",
+							"Paoluz·JP",
+							"Kuromis·US",
+							"Nexitally·US",
+							"Paoluz·US",
+							"自建"
+					]
+				},
+				{
+						"tag": "BiliBili",
+						"type": "selector",
+						"outbounds": [
+							"Kuromis·TW",
+							"Nexitally·TW",
+							"Paoluz·TW",
+							"Paoluz",
+							"自建",
+							"Direct"
+					]
+				},
+				{
+					"tag": "Bahamut",
+					"type": "selector",
+					"outbounds": [
+						"Kuromis·TW",
+						"Nexitally·TW",
+						"Paoluz·TW",
+						"自建"
+					]
+				},
+				{
+						"tag": "ChatGPT",
+						"type": "selector",
+						"outbounds": [
+							"Kuromis·US",
+							"Nexitally·US",
+							"Paoluz·US"
+					]
+				},
+				{
+						"tag": "Steam",
+						"type": "selector",
+						"outbounds": [
+								"Proxy",
+								"Paoluz",
+								"Direct"
+						]
+				},
+				{
+					"tag": "自建",
+					"type": "selector",
+					"outbounds": [
+						"SG"
+					]    
+				},
+				{
+					"type": "shadowsocks",
+					"tag": "SG",
+					"server": "myss.shiyuu.moe",
+					"method": "2022-blake3-aes-256-gcm",
+					"server_port": 45395,
+					"password": "XFgLGZSvIdixXBDl3/hgZ/xXsQNE9BwTdBWDi4w5MpU="
+				},
+				{
+						"type": "direct",
+						"tag": "Direct"
+				},
+				{
+						"type": "block",
+						"tag": "Block"
+				},
+				{
+						"type": "dns",
+						"tag": "Dns-out"
+				}
+		],
+		"route": {
+				"geoip": {
+						"path": "geoip.db",
+						"download_url": "https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geoip.db",
+						"download_detour": "Proxy"
+				},
+				"geosite": {
+						"path": "geosite.db",
+						"download_url": "https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geosite.db",
+						"download_detour": "Proxy"
+				},
+				"rules": [
+						{
+								//"port": 53,关闭Sniff使用
+								"protocol": "dns",开启Sniff使用
+								"outbound": "Dns-out"
+						},        
+						{
+								"geoip": "private",
+								"outbound": "Direct"
+						},
+						{
+								"domain_keyword": [
+										"biligame",
+										"bilibiligame"
+								],
+								"outbound": "Direct"
+						},
+						{
+								"geosite": "telegram",
+								"geoip": "telegram",
+								"outbound": "Proxy"
+						},
+						{
+								"geosite": "youtube",
+								"geoip": "youtube",
+								"outbound": "Proxy"
+						},
+
+						{
+								"geosite": "netflix",
+								"geoip": "netflix",
+								"outbound": "Netflix"
+						},
+						{
+							"domain": [
+								"0gr4uqmtt8y41hcjsgrzdrc31.ourdvsss.com",
+								"0gr4uqmtt8y41hcjsgrzdrc3s.ourdvsss.com",
+								"0gr4uqmtt8y41hcjsgrzdrc3z.ourdvsss.com",
+								"0gr4uqmtt8y41hcjsgrzdrctt.ourdvsss.com",
+								"0gr4uqmtt8y41hcjsgrzdrctu.ourdvsss.com",
+								"0gr4uqmtt8y41hcjz8yzdnc31.ourdvsss.com",
+								"0gr4uqmtt8y41hcjz8yzdnc3t.ourdvsss.com",
+								"0gr4uqmtt8y41hcjzgazdrpba.ourdvsss.com",
+								"0gr4uqmtt8y41hcjzgazdrpbz.ourdvsss.com",
+								"0gr4uqmtt8y41hcjzgazdrpjt.ourdvsss.com",
+								"0gr5dgmttgha1hcj38yzdncb3.ourdvsss.com",
+								"112-81-125-43.dhost.00cdn.com",
+								"113-219-145-1.ksyungslb.com",
+								"114-236-92-129.ksyungslb.com",
+								"180-101-74-1.ksyungslb.com",
+								"1geadrmttge3nhcjwgazdope.ourdvsss.com",
+								"1geadrmttge3nhcjwgwzdqqe.ourdvsss.com",
+								"1gr3uomttgr31hcjo8yzdnco.ourdvsss.com",
+								"1gr3uomttgr31hcjo8yzdnpy.ourdvsss.com",
+								"1gr3uomttgr31hcjtgezdkcy.ourdvsss.com",
+								"1gr4uqmtt8y41hcjigazdqca.ourdvsss.com",
+								"1gr4uqmtt8y41hcjigazdqce.ourdvsss.com",
+								"1gr4uqmtt8y41hcjigazdqco.ourdvsss.com",
+								"1gr4uqmtt8y41hcjigazdqpo.ourdvsss.com",
+								"1gr4uqmtt8y41hcjzgwzdkqe.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdcca.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdcco.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdkca.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdkco.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdkpe.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdkpy.ourdvsss.com",
+								"1gr5dgmttgha1hcj38yzdkqy.ourdvsss.com",
+								"1gr5dgmttgha1hcj3gczdcpa.ourdvsss.com",
+								"1gr5dgmttgha1hcj3gczdcpe.ourdvsss.com",
+								"1gr5dgmttgha1hcj3gczdcpo.ourdvsss.com",
+								"1gr5dgmttgha1hcj3gczdcqy.ourdvsss.com",
+								"1gr5dgmttgha1hcttgrzdnpo.ourdvsss.com",
+								"1graukmttga4nhcjtgozdgce.ourdvsss.com",
+								"218-91-225-1.ksyungslb.com",
+								"219-155-150-1.ksyungslb.com",
+								"222-188-6-1.ksyungslb.com",
+								"36-104-134-1.ksyungslb.com",
+								"36-25-252-1.ksyungslb.com",
+								"3ge3drmttga5nhcbqge3ur.ourdvsss.com",
+								"3geauymtsgrzdnqbofa5do.ourdvsss.com",
+								"3geauymtsgrzdnqbofa5dy.ourdvsss.com",
+								"3geauymtsgrzdrcbzfahue.ourdvsss.com",
+								"3geauymtsgrzdrcbzfahuk.ourdvsss.com",
+								"4go41hcjtgazdoctqge4o.ourdvsss.com",
+								"p-bstarstatic.akamaized.net",
+								"p.bstarstatic.com",
+								"upos-bstar-mirrorakam.akamaized.net",
+								"upos-bstar1-mirrorakam.akamaized.net"
+							],
+							"domain_suffix": [
+								"acg.tv",
+								"acgvideo.com",
+								"animetamashi.cn",
+								"animetamashi.com",
+								"anitama.cn",
+								"anitama.net",
+								"b23.tv",
+								"baka.im",
+								"bigfun.cn",
+								"bigfunapp.cn",
+								"bili22.cn",
+								"bili2233.cn",
+								"bili23.cn",
+								"bili33.cn",
+								"biliapi.com",
+								"biliapi.net",
+								"bilibili.cc",
+								"bilibili.cn",
+								"bilibili.co",
+								"bilibili.com",
+								"bilibili.net",
+								"bilibili.tv",
+								"bilibiligame.cn",
+								"bilibiligame.co",
+								"bilibiligame.net",
+								"bilibilipay.cn",
+								"bilibilipay.com",
+								"bilicdn1.com",
+								"bilicdn2.com",
+								"bilicdn3.com",
+								"bilicdn4.com",
+								"bilicdn5.com",
+								"bilicomics.com",
+								"biligame.cn",
+								"biligame.co",
+								"biligame.com",
+								"biligame.net",
+								"biligo.com",
+								"biliimg.com",
+								"biliintl.com",
+								"biliplus.com",
+								"bilivideo.cn",
+								"bilivideo.com",
+								"bilivideo.net",
+								"corari.com",
+								"dreamcast.hk",
+								"dyhgames.com",
+								"hdslb.com",
+								"hdslb.com.w.kunlunhuf.com",
+								"hdslb.com.w.kunlunpi.com",
+								"hdslb.net",
+								"hdslb.org",
+								"im9.com",
+								"maoercdn.com",
+								"mcbbs.net",
+								"mincdn.com",
+								"sharejoytech.com",
+								"smtcdns.net",
+								"upos-hz-mirrorakam.akamaized.net",
+								"uposdash-302-bilivideo.yfcdn.net",
+								"yo9.com"
+							],
+							"ip_cidr": [
+								"106.75.74.76/32",
+								"111.206.25.147/32",
+								"119.3.238.64/32",
+								"120.92.108.182/32",
+								"120.92.113.99/32",
+								"120.92.153.217/32",
+								"134.175.207.130/32",
+								"203.107.1.0/24"
+							],
+								"outbound": "BiliBili"
+						},
+						{
+								"geosite": "bahamut",
+								"geoip": "bahamut",
+								"outbound": "Bahamut"
+						},
+						{
+								"geosite": "google",
+								"geoip": "google",
+								"outbound": "Proxy"
+						},
+						{
+								"geosite": "microsoft",
+								"geoip": "microsoft",
+								"outbound": "Proxy"
+						},
+						{
+								"geosite": "steam",
+								"geoip": "steam",
+								"outbound": "Steam"
+						},
+						{
+								"geosite": "openai",
+								"geoip": "openai",
+								"outbound": "ChatGPT"
+						},
+						{
+								"geosite": "cn",
+								"outbound": "Direct"
+						},
+						{
+								"geoip": "cn",
+								"outbound": "Direct"
+						}
+				],
+				"final": "Proxy",
+				"find_process": true,
+				"auto_detect_interface": true
+		},
+		"experimental": {
+				"clash_api": {
+						"external_controller": "[::]:5618",
+						"secret": "Kztljyjctddl123",
+						"external_ui_build_in": true,
+						"default_mode": "rule",
+						"store_selected": true,
+						"cache_file": "cache.db"
+				}
+		}
+}
