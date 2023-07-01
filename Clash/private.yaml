@@ -41,7 +41,6 @@ dns:
     - https://dns.pub/dns-query
   fallback:
     - https://dns.cloudflare.com/dns-query
-    - tls://dns.google:853
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -93,9 +92,9 @@ proxy-groups:
 
   - {name: Netflix, <<: *pr}
 
-  - {name: BiliBili, type: select, proxies: [DIRECT, 🇭🇰 香港节点, 🇨🇳 台湾节点]}
+  - {name: BiliBili, type: select, proxies: [DIRECT, 🇨🇳 台湾节点]}
   
-  - {name: Bahamut, type: select, proxies: [🇨🇳 台湾节点, 🇭🇰 香港节点]}
+  - {name: Bahamut, type: select, proxies: [🇨🇳 台湾节点]}
 
   - {name: Google, <<: *pr}
 
@@ -119,7 +118,7 @@ proxy-groups:
 
   - {name: 🇺🇲 美国节点, <<: *u, filter: "(?i)美|US|United States"}
 
-  - {name: 🌎️ 其它节点, <<: *u, filter: "(?i)^(?!.*(?:港|HK|Hong Kong|日本|日|JP|Japan|美|US|United States|新加坡|SG|Singapore|台|TW|Taiwan)).*"}
+  - {name: 🌎️ 其它节点, <<: *u, filter: "(?i)^(?!.*(?:港|HK|Hong Kong|日|JP|Japan|美|US|United States|坡|SG|Singapore|台|TW|Taiwan)).*"}
 
 rule-providers:
   Telegram:
