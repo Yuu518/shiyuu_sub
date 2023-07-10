@@ -378,7 +378,7 @@
 						{
 								"geosite": "youtube",
 								"geoip": "youtube",
-								"outbound": "Proxy"
+								"outbound": "YouTube"
 						},
 
 						{
