@@ -61,6 +61,7 @@
 				"type": "tun",
 				"tag": "SingBox",
 				"interface_name": "SingBox",
+				"mtu": 1480
 				"inet4_address": "172.19.0.1/30",
 				"inet6_address": "fdfe:dcba:9876::1/126",
 				"auto_route": true,
@@ -74,7 +75,7 @@
 			"tag": "Kuromis",
 			"url": "",
 			"cache_file": "./proxy_providers/Kuromis.cache",
-			"force_update": "24h",
+			//"force_update": "24h",
 			"tag_format": "[Kuromis]%s",
 			"filter": {
 				"rule": [
@@ -126,7 +127,7 @@
 			"tag": "Nexitally",
 			"url": "",
 			"cache_file": "./proxy_providers/Nexitally.cache",
-			"force_update": "24h",
+			//"force_update": "24h",
 			"tag_format": "[Nexitally]%s",
 			"filter": {
 				"rule": [
@@ -178,7 +179,7 @@
 			"tag": "Paoluz",
 			"url": "",
 			"cache_file": "./proxy_providers/Paoluz.cache",
-			"force_update": "24h",
+			//"force_update": "24h",
 			"custom_group": [
 				{
 					"tag": "Paoluz·HK",
@@ -428,6 +429,7 @@
 				"final": "Proxy",
 				"find_process": true,
 				"auto_detect_interface": true
+				//"default_interface": "WLAN"
 		},
 		"experimental": {
 				"clash_api": {
