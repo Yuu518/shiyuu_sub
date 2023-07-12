@@ -21,7 +21,7 @@
 						},
 						//{
 						//	"tag": "dns_direct",
-						//	"address": "dhcp://auto",
+						//	"address": "https://1.12.12.12/dns-query",
 						//	"strategy": "prefer_ipv6",
 						//	"detour": "Direct"
 						//},
