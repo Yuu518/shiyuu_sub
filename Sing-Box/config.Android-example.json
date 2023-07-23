@@ -1,0 +1,390 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Cloudflare",
+        "address": "https://dns.cloudflare.com/dns-query",
+        "address_resolver": "Cloudflare_ip",
+        "strategy": "prefer_ipv4",
+        "detour": "Proxy"
+      },
+      {
+        "tag": "Dns-direct",
+        "address": "https://1.12.12.12/dns-query",
+        "strategy": "prefer_ipv6",
+        "detour": "Direct"
+      },
+      {
+        "tag": "Block",
+        "address": "rcode://success"
+      },
+      {
+        "tag": "Cloudflare_ip",
+        "address": "1.1.1.1"
+      },
+      {
+        "tag": "fakedns",
+        "address": "fakeip"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "Dns-direct"
+      },
+      {
+        "geosite": "category-ads-all",
+        "server": "Block",
+        "disable_cache": true
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakedns"
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "SingBox",
+      "interface_name": "SingBox",
+      "mtu": 1500,
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "auto_route": true,
+      "stack": "system",
+      "sniff": false
+    }
+  ],
+  "proxyproviders": [
+    {
+      "tag": "Kuromis",
+      "url": "",
+      "cache_file": "./proxy_providers/Kuromis.cache",
+      "tag_format": "[Kuromis]%s",
+      "filter": {
+        "rule": [
+          "GB",
+          "Traffic Reset",
+          "Expire Date"
+        ],
+        "white_mode": false
+      },
+      "custom_group": [
+        {
+          "tag": "Kuromis·HK",
+          "type": "selector",
+          "rule": [
+            "Hong Kong"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Kuromis·TW",
+          "type": "selector",
+          "rule": [
+            "Taiwan"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Kuromis·Singapore",
+          "type": "selector",
+          "rule": [
+            "Singapore"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Kuromis·JP",
+          "type": "selector",
+          "rule": [
+            "Japan"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Kuromis·US",
+          "type": "selector",
+          "rule": [
+            "United States"
+          ],
+          "white_mode": true
+        }
+      ]
+    },
+    {
+      "tag": "Paoluz",
+      "url": "",
+      "cache_file": "./proxy_providers/Paoluz.cache",
+      "custom_group": [
+        {
+          "tag": "Paoluz·HK",
+          "type": "selector",
+          "rule": [
+            "香港"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Paoluz·TW",
+          "type": "selector",
+          "rule": [
+            "台湾"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Paoluz·Singapore",
+          "type": "selector",
+          "rule": [
+            "新加坡"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Paoluz·JP",
+          "type": "selector",
+          "rule": [
+            "日本"
+          ],
+          "white_mode": true
+        },
+        {
+          "tag": "Paoluz·US",
+          "type": "selector",
+          "rule": [
+            "美国"
+          ],
+          "white_mode": true
+        }
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "Proxy",
+      "type": "selector",
+      "outbounds": [
+        "Kuromis·HK",
+        "Paoluz·HK",
+        "Kuromis·TW",
+        "Paoluz·TW",
+        "Kuromis·Singapore",
+        "Paoluz·Singapore",
+        "Kuromis·JP",
+        "Paoluz·JP",
+        "Kuromis·US",
+        "Paoluz·US",
+        "Kuromis",
+        "Paoluz"
+      ]
+    },
+    {
+      "tag": "YouTube",
+      "type": "selector",
+      "outbounds": [
+        "Proxy",
+        "Kuromis·HK",
+        "Paoluz·HK",
+        "Kuromis·TW",
+        "Paoluz·TW",
+        "Kuromis·Singapore",
+        "Paoluz·Singapore",
+        "Kuromis·JP",
+        "Paoluz·JP",
+        "Kuromis·US",
+        "Paoluz·US"
+      ]
+    },
+    {
+      "tag": "Netflix",
+      "type": "selector",
+      "outbounds": [
+        "Kuromis·Singapore",
+        "Paoluz·Singapore",
+        "Kuromis·JP",
+        "Paoluz·JP",
+        "Kuromis·US",
+        "Paoluz·US"
+      ]
+    },
+    {
+      "tag": "BiliBili",
+      "type": "selector",
+      "outbounds": [
+        "Kuromis·TW",
+        "Paoluz·TW",
+        "Kuromis·Singapore",
+        "Paoluz·Singapore",
+        "Paoluz",
+        "Direct"
+      ]
+    },
+    {
+      "tag": "Bahamut",
+      "type": "selector",
+      "outbounds": [
+        "Kuromis·TW",
+        "Paoluz·TW"
+      ]
+    },
+    {
+      "tag": "ChatGPT",
+      "type": "selector",
+      "outbounds": [
+        "Kuromis·US",
+        "Paoluz·US"
+      ]
+    },
+    {
+      "tag": "Steam",
+      "type": "selector",
+      "outbounds": [
+        "Proxy",
+        "Paoluz",
+        "Direct"
+      ]
+    },
+    {
+      "type": "direct",
+      "tag": "Direct",
+      "domain_strategy": "prefer_ipv6"
+    },
+    {
+      "type": "block",
+      "tag": "Block"
+    },
+    {
+      "type": "dns",
+      "tag": "Dns-out"
+    }
+  ],
+  "route": {
+    "geoip": {
+      "path": "geoip.db",
+      "download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geoip.db",
+      "download_detour": "Proxy"
+    },
+    "geosite": {
+      "path": "geosite.db",
+      "download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geosite.db",
+      "download_detour": "Proxy"
+    },
+    "rules": [
+      {
+        "port": 53,
+        "outbound": "Dns-out"
+      },
+      {
+        "geosite": "category-ads-all",
+        "outbound": "Block"
+      },
+      {
+        "geoip": "private",
+        "outbound": "Direct"
+      },
+      {
+        "domain_keyword": [
+          "biligame",
+          "bilibiligame"
+        ],
+        "outbound": "Direct"
+      },
+      {
+        "geosite": "telegram",
+        "geoip": "telegram",
+        "outbound": "Proxy"
+      },
+      {
+        "geosite": "youtube",
+        "geoip": "youtube",
+        "outbound": "YouTube"
+      },
+      {
+        "geosite": "netflix",
+        "geoip": "netflix",
+        "outbound": "Netflix"
+      },
+      {
+        "geosite": "bilibili",
+        "geoip": "bilibili",
+        "outbound": "BiliBili"
+      },
+      {
+        "package_name": [
+          "tv.danmaku.bili"
+        ],
+        "outbound": "BiliBili"
+      },
+      {
+        "geosite": "bahamut",
+        "geoip": "bahamut",
+        "outbound": "Bahamut"
+      },
+      {
+        "geosite": "google",
+        "geoip": "google",
+        "outbound": "Proxy"
+      },
+      {
+        "geosite": "microsoft",
+        "geoip": "microsoft",
+        "outbound": "Proxy"
+      },
+      {
+        "geosite": "steam",
+        "geoip": "steam",
+        "outbound": "Steam"
+      },
+      {
+        "domain": [
+          "cdn.auth0.com",
+          "o33249.ingest.sentry.io"
+        ],
+        "domain_suffix": [
+          "ai.com",
+          "challenges.cloudflare.com",
+          "identrust.com",
+          "stripe.com"
+        ],
+        "domain_keyword": "openai",
+        "outbound": "ChatGPT"
+      },
+      {
+        "geosite": "cn",
+        "outbound": "Direct"
+      },
+      {
+        "geoip": "cn",
+        "outbound": "Direct"
+      }
+    ],
+    "final": "Proxy",
+    "find_process": true,
+    "auto_detect_interface": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "[::]:9090",
+      "external_ui_build_in": true,
+      "default_mode": "rule",
+      "store_selected": true,
+      "cache_file": "cache.db"
+    }
+  }
+}
