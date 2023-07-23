@@ -1,81 +1,76 @@
 {
-		"log": {
-				"disabled": false,
-				"level": "info",
-		    		"output": "box.log",
-				"timestamp": true
-		},
-		"dns": {
-				"servers": [
-						{
-							"tag": "Cloudflare",
-							"address": "https://dns.cloudflare.com/dns-query",
-							"address_resolver": "CF",
-							"strategy": "prefer_ipv4",
-							"detour": "Proxy"
-						},
-						{
-							"tag": "dnspod",
-							"address": "https://1.12.12.12/dns-query",
-							"detour": "Direct"
-						},
-						//{
-						//	"tag": "dns_direct",
-						//	"address": "https://1.12.12.12/dns-query",
-						//	"strategy": "prefer_ipv6",
-						//	"detour": "Direct"
-						//},
-						{
-							"tag": "CF",
-							"address": "1.1.1.1"
-						},
-						{
-							"tag": "fakedns",
-							"address": "fakeip"
-						}
-				],
-				"rules": [
-						{
-							 "outbound": "any",
-							 "server": "dnspod"
-						},
-						{
-							"query_type": [
-								"A",
-								"AAAA"
-							],
-							"server": "fakedns"
-						}
-				],
-				"fakeip": {
-						"enabled": true,
-						"inet4_range": "198.18.0.0/15",
-						"inet6_range": "fc00::/18"
-				},
-				"independent_cache": true,
-				//"strategy": "ipv4_only"
-		},
-		"inbounds": [
-		{
-				"type": "tun",
-				"tag": "SingBox",
-				"interface_name": "SingBox",
-				"mtu": 1480
-				"inet4_address": "172.19.0.1/30",
-				"inet6_address": "fdfe:dcba:9876::1/126",
-				"auto_route": true,
-				"strict_route": false,
-				"stack": "system",
-				"sniff": false
-		}
+	"log": {
+		"disabled": false,
+		"level": "info",
+		//"output": "box.log",
+		"timestamp": true
+	},
+	"dns": {
+		"servers": [
+			{
+
+				"tag": "Cloudflare",
+				"address": "https://dns.cloudflare.com/dns-query",
+				"address_resolver": "Cloudflare_ip",
+				"strategy": "prefer_ipv4",
+				"detour": "Proxy"
+			},
+			{
+				"tag": "dns_direct",
+				"address": "https://1.12.12.12/dns-query",
+				"strategy": "prefer_ipv6",
+				"detour": "Direct"
+			},
+			{
+				"tag": "Cloudflare_ip",
+				"address": "1.1.1.1"
+			},
+			{
+				"tag": "fakedns",
+				"address": "fakeip"
+			}
 		],
+		"rules": [
+			{				
+				"outbound": "any",
+				"server": "dns_direct"
+			},
+			{
+				"query_type": [
+					"A",
+					"AAAA"
+				],
+				"server": "fakedns"
+			}
+		],
+		"fakeip": {
+			"enabled": true,
+			"inet4_range": "198.18.0.0/15",
+			"inet6_range": "fc00::/18"
+		},
+		"independent_cache": true
+	},
+	"inbounds": [
+		{
+			"type": "tun",
+			"tag": "SingBox",
+			"interface_name": "SingBox",
+			"mtu": 1500,
+			"inet4_address": "172.19.0.1/30",
+			"inet6_address": "fdfe:dcba:9876::1/126",
+			"auto_route": true,
+			"strict_route": false,
+			"stack": "system",
+			"sniff": false
+		}
+	],
 	"proxyproviders": [
 		{
 			"tag": "Kuromis",
 			"url": "",
 			"cache_file": "./proxy_providers/Kuromis.cache",
 			//"force_update": "24h",
-			"tag_format": "[Kuromis]%s",
+			// "tag_format": "[Kuromis]%s",
 			"filter": {
 				"rule": [
 					"GB",
@@ -122,58 +117,58 @@
 				}
 			]
 		},
-		{
-			"tag": "Nexitally",
-			"url": "",
-			"cache_file": "./proxy_providers/Nexitally.cache",
-			//"force_update": "24h",
-			"tag_format": "[Nexitally]%s",
-			"filter": {
-				"rule": [
-					"GB",
-					"Traffic Reset",
-					"Expire Date",
-					"Premium"
-				],
-				"white_mode": false
-			},
+		// {
+		// 	"tag": "Nexitally",
+		// 	"url": "",
+		// 	"cache_file": "./proxy_providers/Nexitally.cache",
+		// 	//"force_update": "24h",
+		// 	"tag_format": "[Nexitally]%s",
+		// 	"filter": {
+		// 		"rule": [
+		// 			"GB",
+		// 			"Traffic Reset",
+		// 			"Expire Date",
+		// 			"Premium"
+		// 		],
+		// 		"white_mode": false
+		// 	},
 
-			"custom_group": [
-				{
-					"tag": "Nexitally·HK",
-					"type": "selector",
-					"rule": [ "Hong Kong" ],
-					"white_mode": true
-				},
-				{
-					"tag": "Nexitally·TW",
-					"type": "selector",
-					"rule": [ "Taiwan" ],
-					"white_mode": true
-				},
-				{
-					"tag": "Nexitally·Singapore",
-					"type": "selector",
-					"rule": [ "Singapore" ],
-					"white_mode": true
-				},
-				{
-					"tag": "Nexitally·JP",
-					"type": "selector",
-					"rule": [ "Japan" ],
-					"white_mode": true
-				},
-				{
-					"tag": "Nexitally·US",
-					"type": "selector",
-					"rule": [
-						"United States",
-						"USA"
-					],
-					"white_mode": true
-				}
-			]
-		},
+		// 	"custom_group": [
+		// 		{
+		// 			"tag": "Nexitally·HK",
+		// 			"type": "selector",
+		// 			"rule": [ "Hong Kong" ],
+		// 			"white_mode": true
+		// 		},
+		// 		{
+		// 			"tag": "Nexitally·TW",
+		// 			"type": "selector",
+		// 			"rule": [ "Taiwan" ],
+		// 			"white_mode": true
+		// 		},
+		// 		{
+		// 			"tag": "Nexitally·Singapore",
+		// 			"type": "selector",
+		// 			"rule": [ "Singapore" ],
+		// 			"white_mode": true
+		// 		},
+		// 		{
+		// 			"tag": "Nexitally·JP",
+		// 			"type": "selector",
+		// 			"rule": [ "Japan" ],
+		// 			"white_mode": true
+		// 		},
+		// 		{
+		// 			"tag": "Nexitally·US",
+		// 			"type": "selector",
+		// 			"rule": [
+		// 				"United States",
+		// 				"USA"
+		// 			],
+		// 			"white_mode": true
+		// 		}
+		// 	]
+		// },
 		{
 			"tag": "Paoluz",
 			"url": "",
@@ -213,231 +208,289 @@
 			]
 		}
 	],
-		"outbounds": [
-				{
-						"tag": "Proxy",
-						"type": "selector",
-						"outbounds": [
-							"Kuromis·HK",
-							"Nexitally·HK",
-							"Paoluz·HK",
-							"Kuromis·TW",
-							"Nexitally·TW",
-							"Paoluz·TW",
-							"Kuromis·Singapore",
-							"Nexitally·Singapore",
-							"Paoluz·Singapore",
-							"Kuromis·JP",
-							"Nexitally·JP",
-							"Paoluz·JP",
-							"Kuromis·US",
-							"Nexitally·US",
-							"Paoluz·US",
-							"自建"
-					]
-				},
-				{
-						"tag": "YouTube",
-						"type": "selector",
-						"outbounds": [
-						 "Proxy",
-						 "Kuromis·HK",
-						 "Nexitally·HK",
-						 "Paoluz·HK",
-						 "Kuromis·TW",
-						 "Nexitally·TW",
-						 "Paoluz·TW",
-						 "Kuromis·Singapore",
-						 "Nexitally·Singapore",
-						 "Paoluz·Singapore",
-						 "Kuromis·JP",
-						 "Nexitally·JP",
-						 "Paoluz·JP",
-						 "Kuromis·US",
-						 "Nexitally·US",
-						 "Paoluz·US"
-				 ]
-				},
-				{
-						"tag": "Netflix",
-						"type": "selector",
-						"outbounds": [
-							"Kuromis·Singapore",
-							"Nexitally·Singapore",
-							"Paoluz·Singapore",
-							"Kuromis·JP",
-							"Nexitally·JP",
-							"Paoluz·JP",
-							"Kuromis·US",
-							"Nexitally·US",
-							"Paoluz·US",
-							"自建"
-					]
-				},
-				{
-						"tag": "BiliBili",
-						"type": "selector",
-						"outbounds": [
-							"Kuromis·TW",
-							"Nexitally·TW",
-							"Paoluz·TW",
-							"Paoluz",
-							"自建",
-							"Direct"
-					]
-				},
-				{
-					"tag": "Bahamut",
-					"type": "selector",
-					"outbounds": [
-						"Kuromis·TW",
-						"Nexitally·TW",
-						"Paoluz·TW",
-						"自建"
-					]
-				},
-				{
-						"tag": "ChatGPT",
-						"type": "selector",
-						"outbounds": [
-							"Kuromis·US",
-							"Nexitally·US",
-							"Paoluz·US"
-					]
-				},
-				{
-						"tag": "Steam",
-						"type": "selector",
-						"outbounds": [
-								"Proxy",
-								"Paoluz",
-								"Direct"
-						]
-				},
-				{
-					"tag": "自建",
-					"type": "selector",
-					"outbounds": [
-						"SG"
-					]    
-				},
-				{
-					"type": "shadowsocks",
-					"tag": "SG",
-					"server": "myss.shiyuu.moe",
-					"method": "2022-blake3-aes-256-gcm",
-					"server_port": 45395,
-					"password": "XFgLGZSvIdixXBDl3/hgZ/xXsQNE9BwTdBWDi4w5MpU="
-				},
-				{
-						"type": "direct",
-						"tag": "Direct"
-				},
-				{
-						"type": "block",
-						"tag": "Block"
-				},
-				{
-						"type": "dns",
-						"tag": "Dns-out"
-				}
+	"outbounds": [
+		{
+			"tag": "Proxy",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·HK",
+				// "Nexitally·HK",
+				"Paoluz·HK",
+				"Kuromis·TW",
+				// "Nexitally·TW",
+				"Paoluz·TW",
+				"Kuromis·Singapore",
+				// "Nexitally·Singapore",
+				"Paoluz·Singapore",
+				"Kuromis·JP",
+				// "Nexitally·JP",
+				"Paoluz·JP",
+				"Kuromis·US",
+				// "Nexitally·US",
+				"Paoluz·US",
+				"Kuromis",
+				"Paoluz"
+			]
+		},
+		{
+			"tag": "YouTube",
+			"type": "selector",
+			"outbounds": [
+				"Proxy",
+				"Kuromis·HK",
+				// "Nexitally·HK",
+				"Paoluz·HK",
+				"Kuromis·TW",
+				// "Nexitally·TW",
+				"Paoluz·TW",
+				"Kuromis·Singapore",
+				//  "Nexitally·Singapore",
+				"Paoluz·Singapore",
+				"Kuromis·JP",
+				//  "Nexitally·JP",
+				"Paoluz·JP",
+				"Kuromis·US",
+				//  "Nexitally·US",
+				"Paoluz·US"
+			]
+		},
+		{
+			"tag": "Netflix",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·Singapore",
+				// "Nexitally·Singapore",
+				"Paoluz·Singapore",
+				"Kuromis·JP",
+				// "Nexitally·JP",
+				"Paoluz·JP",
+				"Kuromis·US",
+				// "Nexitally·US",
+				"Paoluz·US"
+			]
+		},
+		{
+			"tag": "Primevideo",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·HK",
+				// "Nexitally·HK",
+				"Paoluz·HK",
+				"Kuromis·TW",
+				// "Nexitally·TW",
+				"Paoluz·TW",
+				"Kuromis·Singapore",
+				// "Nexitally·Singapore",
+				"Paoluz·Singapore",
+				"Kuromis·JP",
+				// "Nexitally·JP",
+				"Paoluz·JP",
+				"Kuromis·US",
+				// "Nexitally·US",
+				"Paoluz·US"
+			]
+		},
+		{
+			"tag": "BiliBili",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·TW",
+				// "Nexitally·TW",
+				"Paoluz·TW",
+				"Kuromis·Singapore",
+				// "Nexitally·Singapore",
+				"Paoluz·Singapore",
+				"Paoluz",
+				"Direct"
+			]
+		},
+		{
+			"tag": "Bahamut",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·TW",
+				// "Nexitally·TW",
+				"Paoluz·TW"
+			]
+		},
+		{
+			"tag": "ChatGPT",
+			"type": "selector",
+			"outbounds": [
+				"Kuromis·US",
+				// "Nexitally·US",
+				"Paoluz·US"
+			]
+		},
+		{
+			"tag": "Steam",
+			"type": "selector",
+			"outbounds": [
+					"Proxy",
+					"Paoluz",
+					"Direct"
+			]
+		},
+		{
+			"type": "direct",
+			"tag": "Direct",
+			"domain_strategy": "prefer_ipv6"
+		},
+		{
+			"type": "block",
+			"tag": "Block"
+		},
+		{
+			"type": "dns",
+			"tag": "Dns-out"
+		}
 		],
 		"route": {
-				"geoip": {
-						"path": "geoip.db",
-						"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geoip.db",
-						"download_detour": "Proxy"
+			"geoip": {
+				"path": "geoip.db",
+				"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geoip.db",
+				"download_detour": "Proxy"
+			},
+			"geosite": {
+				"path": "geosite.db",
+				"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geosite.db",
+				"download_detour": "Proxy"
+			},
+			"rules": [
+				{
+					"port": 53,
+					//"protocol": "dns",
+					"outbound": "Dns-out"
 				},
-				"geosite": {
-						"path": "geosite.db",
-						"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geosite.db",
-						"download_detour": "Proxy"
+				{
+					"geoip": "private",
+					"outbound": "Direct"
 				},
-				"rules": [
-						{
-								"port": 53,关闭Sniff使用
-								//"protocol": "dns",开启Sniff使用
-								"outbound": "Dns-out"
-						},        
-						{
-								"geoip": "private",
-								"outbound": "Direct"
-						},
-						{
-								"domain_keyword": [
-										"biligame",
-										"bilibiligame"
-								],
-								"outbound": "Direct"
-						},
-						{
-								"geosite": "telegram",
-								"geoip": "telegram",
-								"outbound": "Proxy"
-						},
-						{
-								"geosite": "youtube",
-								"geoip": "youtube",
-								"outbound": "YouTube"
-						},
-
-						{
-								"geosite": "netflix",
-								"geoip": "netflix",
-								"outbound": "Netflix"
-						},
-						{
-								"geosite": "bilibili",
-								"geoip": "bilibili",
-								"outbound": "BiliBili"
-						},
-						{
-								"geosite": "bahamut",
-								"geoip": "bahamut",
-								"outbound": "Bahamut"
-						},
-						{
-								"geosite": "google",
-								"geoip": "google",
-								"outbound": "Proxy"
-						},
-						{
-								"geosite": "microsoft",
-								"geoip": "microsoft",
-								"outbound": "Proxy"
-						},
-						{
-								"geosite": "steam",
-								"geoip": "steam",
-								"outbound": "Steam"
-						},
-						{
-								"geosite": "openai",
-								"geoip": "openai",
-								"outbound": "ChatGPT"
-						},
-						{
-								"geosite": "cn",
-								"outbound": "Direct"
-						},
-						{
-								"geoip": "cn",
-								"outbound": "Direct"
-						}
-				],
-				"final": "Proxy",
-				"find_process": true,
-				"auto_detect_interface": true
-				//"default_interface": "WLAN"
+				{
+					"domain_keyword": [
+						"biligame",
+						"bilibiligame"
+					],
+						"outbound": "Direct"
+				},
+				{
+					"process_name": [
+						"BitComet.exe"
+					],
+					"outbound": "Direct"
+				},
+				{
+					"process_name": "Photoshop.exe",
+					"outbound": "Block"
+				},
+				{
+					"geosite": "telegram",
+					"geoip": "telegram",
+					"outbound": "Proxy"
+				},
+				{
+					"geosite": "youtube",
+					"geoip": "youtube",
+					"outbound": "YouTube"
+				},
+				{
+					"geosite": "netflix",
+					"geoip": "netflix",
+					"outbound": "Netflix"
+				},
+				{
+					"domain":[
+						"atv-ps.amazon.com",
+						"avodmp4s3ww-a.akamaihd.net",
+						"d1v5ir2lpwr8os.cloudfront.net",
+						"d22qjgkvxw22r6.cloudfront.net",
+						"d25xi40x97liuc.cloudfront.net",
+						"d27xxe7juh1us6.cloudfront.net",
+						"dmqdd6hw24ucf.cloudfront.net",
+						"fls-na.amazon.com",
+						"www.amazon.com"
+					],
+					"domain_suffix":[
+						"aiv-cdn.net",
+						"aiv-delivery.net",
+						"amazonprimevideo.cn",
+						"amazonprimevideo.com.cn",
+						"amazonprimevideos.com",
+						"amazonvideo.cc",
+						"amazonvideo.com",
+						"media-amazon.com",
+						"prime-video.com",
+						"primevideo.cc",
+						"primevideo.com",
+						"primevideo.info",
+						"primevideo.org",
+						"primevideo.tv",
+						"pv-cdn.net"
+					],
+					"domain_keyword": "avoddashs",
+					"outbound": "Primevideo"
+				},
+				{
+					"geosite":"bilibili",
+					"geoip":"bilibili",
+					"outbound": "BiliBili"
+				},
+				{
+					"geosite": "bahamut",
+					"geoip": "bahamut",
+					"outbound": "Bahamut"
+				},
+				{
+					"geosite": "google",
+					"geoip": "google",
+					"outbound": "Proxy"
+				},
+				{
+					"geosite": "microsoft",
+					"geoip": "microsoft",
+					"outbound": "Proxy"
+				},
+				{
+					"geosite": "steam",
+					"geoip": "steam",
+					"outbound": "Steam"
+				},
+				{
+					"domain":[
+						"cdn.auth0.com",
+						"o33249.ingest.sentry.io"
+					],
+					"domain_suffix":[
+						"ai.com",
+						"challenges.cloudflare.com",
+						"identrust.com",
+						"stripe.com"
+					],
+					"domain_keyword": "openai",
+					"outbound": "ChatGPT"
+				},
+				{
+					"geosite": "cn",
+					"outbound": "Direct"
+				},
+				{
+					"geoip": "cn",
+					"outbound": "Direct"
+				}
+			],
+			"final": "Proxy",
+			"find_process": true,
+			"default_interface": "WLAN"
+			//"auto_detect_interface": true
 		},
 		"experimental": {
-				"clash_api": {
-						"external_controller": "[::]:5618",
-						"secret": "Kztljyjctddl123",
-						"external_ui_build_in": true,
-						"default_mode": "rule",
-						"store_selected": true,
-						"cache_file": "cache.db"
-				}
+			"clash_api": {
+				"external_controller": "[::]:5618",
+				"secret": "Kztljyjctddl123",
+				"external_ui_build_in": true,
+				"default_mode": "rule",
+				"store_selected": true,
+				"cache_file": "cache.db"
+			}
 		}
 }
