@@ -59,6 +59,12 @@
   },
   "inbounds": [
     {
+      "type": "tproxy",
+      "tag": "Singbox"
+      "listen": "::",
+      "sniff": false
+    },
+    {
       "type": "tun",
       "tag": "SingBox",
       "interface_name": "SingBox",
