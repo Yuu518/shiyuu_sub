@@ -358,8 +358,8 @@
 			},
 			"rules": [
 				{
-					"port": 53,
-					//"protocol": "dns",
+					"port": 53, //关闭sniff使用
+					//"protocol": "dns", //开启sniff使用
 					"outbound": "Dns-out"
 				},
 				{
