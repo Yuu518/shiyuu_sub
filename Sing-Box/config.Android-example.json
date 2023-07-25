@@ -358,17 +358,7 @@
         "outbound": "Steam"
       },
       {
-        "domain": [
-          "cdn.auth0.com",
-          "o33249.ingest.sentry.io"
-        ],
-        "domain_suffix": [
-          "ai.com",
-          "challenges.cloudflare.com",
-          "identrust.com",
-          "stripe.com"
-        ],
-        "domain_keyword": "openai",
+        "geosite": "openai",
         "outbound": "ChatGPT"
       },
       {
