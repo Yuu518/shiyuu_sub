@@ -59,7 +59,7 @@
 			"inet4_address": "172.19.0.1/30",
 			"inet6_address": "fdfe:dcba:9876::1/126",
 			"auto_route": true,
-			"strict_route": false,
+			"strict_route": true,
 			"stack": "system",
 			"sniff": false
 		}
@@ -456,17 +456,7 @@
 					"outbound": "Steam"
 				},
 				{
-					"domain":[
-						"cdn.auth0.com",
-						"o33249.ingest.sentry.io"
-					],
-					"domain_suffix":[
-						"ai.com",
-						"challenges.cloudflare.com",
-						"identrust.com",
-						"stripe.com"
-					],
-					"domain_keyword": "openai",
+					"geosite": "openai",
 					"outbound": "ChatGPT"
 				},
 				{
