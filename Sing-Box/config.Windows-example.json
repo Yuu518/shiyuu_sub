@@ -16,7 +16,7 @@
 				"detour": "Proxy"
 			},
 			{
-				"tag": "dns_direct",
+				"tag": "Dns_direct",
 				"address": "https://1.12.12.12/dns-query",
 				"strategy": "prefer_ipv6",
 				"detour": "Direct"
@@ -26,6 +26,10 @@
 				"address": "1.1.1.1"
 			},
 			{
+                "tag": "Dns_block",
+                "address": "rcode://success"
+            },
+			{
 				"tag": "fakedns",
 				"address": "fakeip"
 			}
@@ -33,7 +37,7 @@
 		"rules": [
 			{				
 				"outbound": "any",
-				"server": "dns_direct"
+				"server": "Dns_direct"
 			},
 			{
 				"query_type": [
@@ -323,6 +327,14 @@
 			]
 		},
 		{
+			"tag": "BlueStacks",
+			"type": "selector",
+			"outbounds": [
+				"Direct",
+				"Proxy"
+			]
+		},
+		{
 			"tag": "Steam",
 			"type": "selector",
 			"outbounds": [
@@ -348,12 +360,12 @@
 		"route": {
 			"geoip": {
 				"path": "geoip.db",
-				"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geoip.db",
+				"download_url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.db",
 				"download_detour": "Proxy"
 			},
 			"geosite": {
 				"path": "geosite.db",
-				"download_url": "https://github.com/lyc8503/sing-box-rules/releases/latest/download/geosite.db",
+				"download_url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.db",
 				"download_detour": "Proxy"
 			},
 			"rules": [
@@ -361,6 +373,12 @@
 					"port": 53,
 					//"protocol": "dns",
 					"outbound": "Dns-out"
+				},
+				{
+					"protocol": [
+						"quic"
+					],
+					"outbound": "Block"
 				},
 				{
 					"geoip": "private",
@@ -380,6 +398,10 @@
 					"outbound": "Direct"
 				},
 				{
+					"process_name": "HD-Player.exe",
+					"outbound": "BlueStacks"
+				},
+				{
 					"process_name": "Photoshop.exe",
 					"outbound": "Block"
 				},
@@ -390,7 +412,6 @@
 				},
 				{
 					"geosite": "youtube",
-					"geoip": "youtube",
 					"outbound": "YouTube"
 				},
 				{
@@ -399,35 +420,7 @@
 					"outbound": "Netflix"
 				},
 				{
-					"domain":[
-						"atv-ps.amazon.com",
-						"avodmp4s3ww-a.akamaihd.net",
-						"d1v5ir2lpwr8os.cloudfront.net",
-						"d22qjgkvxw22r6.cloudfront.net",
-						"d25xi40x97liuc.cloudfront.net",
-						"d27xxe7juh1us6.cloudfront.net",
-						"dmqdd6hw24ucf.cloudfront.net",
-						"fls-na.amazon.com",
-						"www.amazon.com"
-					],
-					"domain_suffix":[
-						"aiv-cdn.net",
-						"aiv-delivery.net",
-						"amazonprimevideo.cn",
-						"amazonprimevideo.com.cn",
-						"amazonprimevideos.com",
-						"amazonvideo.cc",
-						"amazonvideo.com",
-						"media-amazon.com",
-						"prime-video.com",
-						"primevideo.cc",
-						"primevideo.com",
-						"primevideo.info",
-						"primevideo.org",
-						"primevideo.tv",
-						"pv-cdn.net"
-					],
-					"domain_keyword": "avoddashs",
+					"geosite": "primevideo",
 					"outbound": "Primevideo"
 				},
 				{
@@ -437,7 +430,6 @@
 				},
 				{
 					"geosite": "bahamut",
-					"geoip": "bahamut",
 					"outbound": "Bahamut"
 				},
 				{
@@ -447,12 +439,10 @@
 				},
 				{
 					"geosite": "microsoft",
-					"geoip": "microsoft",
 					"outbound": "Proxy"
 				},
 				{
 					"geosite": "steam",
-					"geoip": "steam",
 					"outbound": "Steam"
 				},
 				{
@@ -470,8 +460,8 @@
 			],
 			"final": "Proxy",
 			"find_process": true,
-			"default_interface": "WLAN"
-			//"auto_detect_interface": true
+			// "default_interface": "WLAN"
+			"auto_detect_interface": true
 		},
 		"experimental": {
 			"clash_api": {
