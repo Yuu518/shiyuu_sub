@@ -8,17 +8,16 @@
 	"dns": {
 		"servers": [
 			{
-
 				"tag": "Cloudflare",
-				"address": "https://dns.cloudflare.com/dns-query",
+				"address": "tls://1dot1dot1dot1.cloudflare-dns.com",
+				"strategy": "ipv4_only",
 				"address_resolver": "Cloudflare_ip",
-				"strategy": "prefer_ipv4",
 				"detour": "Proxy"
 			},
 			{
 				"tag": "Dns_direct",
 				"address": "https://1.12.12.12/dns-query",
-				"strategy": "prefer_ipv6",
+				"strategy": "prefer_ipv4",
 				"detour": "Direct"
 			},
 			{
@@ -345,8 +344,8 @@
 		},
 		{
 			"type": "direct",
-			"tag": "Direct",
-			"domain_strategy": "prefer_ipv6"
+			"tag": "Direct"
+			// "domain_strategy": "prefer_ipv6"
 		},
 		{
 			"type": "block",
@@ -360,12 +359,12 @@
 		"route": {
 			"geoip": {
 				"path": "geoip.db",
-				"download_url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.db",
+				"download_url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.db",
 				"download_detour": "Proxy"
 			},
 			"geosite": {
 				"path": "geosite.db",
-				"download_url": "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.db",
+				"download_url": "https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geosite.db",
 				"download_detour": "Proxy"
 			},
 			"rules": [
@@ -393,7 +392,8 @@
 				},
 				{
 					"process_name": [
-						"BitComet.exe"
+						"BitComet.exe",
+						"TeamViewer_Service.exe"
 					],
 					"outbound": "Direct"
 				},
@@ -465,8 +465,8 @@
 		},
 		"experimental": {
 			"clash_api": {
-				"external_controller": "[::]:9090",
-				"secret": "",
+				"external_controller": "[::]:5618",
+				"secret": "Kztljyjctddl123",
 				"external_ui_build_in": true,
 				"default_mode": "rule",
 				"store_selected": true,
