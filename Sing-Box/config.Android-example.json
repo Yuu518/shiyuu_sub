@@ -16,7 +16,7 @@
       {
         "tag": "Dns-direct",
         "address": "https://1.12.12.12/dns-query",
-        "strategy": "prefer_ipv6",
+        "strategy": "prefer_ipv4",
         "detour": "Direct"
       },
       {
@@ -269,7 +269,7 @@
     {
       "type": "direct",
       "tag": "Direct",
-      "domain_strategy": "prefer_ipv6"
+      //"domain_strategy": "prefer_ipv6"
     },
     {
       "type": "block",
