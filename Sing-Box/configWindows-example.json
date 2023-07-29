@@ -465,8 +465,8 @@
 		},
 		"experimental": {
 			"clash_api": {
-				"external_controller": "[::]:5618",
-				"secret": "Kztljyjctddl123",
+				"external_controller": "[::]:9090",
+				"secret": "",
 				"external_ui_build_in": true,
 				"default_mode": "rule",
 				"store_selected": true,
