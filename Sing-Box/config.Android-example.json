@@ -58,14 +58,14 @@
     "independent_cache": true
   },
   "inbounds": [
-    {
-      "type": "tproxy",
-      "tag": "Singbox"
-      "listen": "::",
-      "listen_port": 5353,
-      "sniff": false,
-      "sniff_override_destination": false
-    },
+    // {
+    //   "type": "tproxy",
+    //   "tag": "Singbox",
+    //   "listen": "::",
+    //   "listen_port": 5353,
+    //   "sniff": false,
+    //   "sniff_override_destination": false
+    // },
     {
       "type": "tun",
       "tag": "SingBox",

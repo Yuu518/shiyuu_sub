@@ -10,7 +10,7 @@
 			{
 				"tag": "Cloudflare",
 				"address": "tls://1dot1dot1dot1.cloudflare-dns.com",
-				"strategy": "ipv4_only",
+				"strategy": "prefer_ipv4",
 				"address_resolver": "Cloudflare_ip",
 				"detour": "Proxy"
 			},
@@ -62,7 +62,7 @@
 			"inet4_address": "172.19.0.1/30",
 			"inet6_address": "fdfe:dcba:9876::1/126",
 			"auto_route": true,
-			"strict_route": true,
+			"strict_route": false,
 			"stack": "system",
 			"sniff": false
 		}
