@@ -270,8 +270,7 @@
     },
     {
       "type": "direct",
-      "tag": "Direct",
-      //"domain_strategy": "prefer_ipv6"
+      "tag": "Direct"
     },
     {
       "type": "block",
