@@ -62,7 +62,9 @@
       "type": "tproxy",
       "tag": "Singbox"
       "listen": "::",
-      "sniff": false
+      "listen_port": 5353,
+      "sniff": false,
+      "sniff_override_destination": false
     },
     {
       "type": "tun",
