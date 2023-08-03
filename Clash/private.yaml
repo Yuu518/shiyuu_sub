@@ -1,24 +1,26 @@
 port: 7890
 allow-lan: true
 mode: rule
-#geodata-mode: false
+geodata-mode: true
 log-level: info
-ipv6: false
+ipv6: true
 external-controller: 127.0.0.1:9090
-#external-ui: dashboard
+secret: ""
+external-ui: dashboard
 
-#geox-url:
-  #geoip: "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
-  #geosite: "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-  #mmdb: "https://github.com/Loyalsoldier/geoip/releases/latest/download/Country.mmdb"
-
+geox-url:
+  geoip: "https://ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://ghproxy.com/https://github.com/CHIZI-0618/v2ray-rules-dat/releases/latest/download/geosite.dat"
+  mmdb: "https://ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  
 profile:
   store-selected: true
   store-fake-ip: true
 
 tun:
-  enable: false
+  enable: true
   device: Meta
+  mtu: 1500
   stack: system
   dns-hijack:
     - 'any:53'
@@ -32,17 +34,16 @@ dns:
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-filter: 
-  - '*'
-  - '+.lan'
-  - 'localhost.ptlogin2.qq.com'
+    - '*.lan'
+    - 'localhost.ptlogin2.qq.com'
   nameserver:
-    - 119.29.29.29
-
+    - tls://1.12.12.12
+        
 proxies:
 p: &p
   {type: http, interval: 3600, health-check: {enable: true, url: http://cp.cloudflare.com, interval: 300}}
 pr: &pr
-  {type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  {type: select, proxies: [Proxy, 🇭🇰 Hong Kong, 🇨🇳 Taiwan, 🇯🇵 Japan, 🇸🇬 Singapore, 🇺🇲 US, 🌎️ Other, DIRECT]}
 
 u: &u
   type: select
@@ -63,17 +64,17 @@ proxy-providers:
 
 proxy-groups:
 
-  - {name: Proxy, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌎️ 其它节点, DIRECT]}
+  - {name: Proxy, type: select, proxies: [🇭🇰 Hong Kong, 🇨🇳 Taiwan, 🇯🇵 Japan, 🇸🇬 Singapore, 🇺🇲 US, 🌎️ Other, DIRECT]}
 
   - {name: Telegram, <<: *pr}
 
   - {name: YouTube, <<: *pr}
 
-  - {name: Netflix, <<: *pr}
+  - {name: Netflix, type: select, proxies: [🇸🇬 Singapore, 🇭🇰 Hong Kong, 🇨🇳 Taiwan, 🇯🇵 Japan, 🇺🇲 US, 🌎️ Other]}
 
-  - {name: BiliBili, type: select, proxies: [DIRECT, 🇨🇳 台湾节点]}
+  - {name: BiliBili, type: select, proxies: [🇨🇳 Taiwan, DIRECT]}
   
-  - {name: Bahamut, type: select, proxies: [🇨🇳 台湾节点]}
+  - {name: Bahamut, type: select, proxies: [🇨🇳 Taiwan]}
 
   - {name: Google, <<: *pr}
 
@@ -87,17 +88,17 @@ proxy-groups:
   
 
 #分隔，下面是地区分组
-  - {name: 🇭🇰 香港节点, <<: *u,filter: "(?i)港|HK|Hong Kong"}
+  - {name: 🇭🇰 Hong Kong, <<: *u,filter: "(?i)港|HK|Hong Kong"}
 
-  - {name: 🇨🇳 台湾节点, <<: *u, filter: "(?i)台|TW|Taiwan"}
+  - {name: 🇨🇳 Taiwan, <<: *u, filter: "(?i)台|TW|Taiwan"}
 
-  - {name: 🇸🇬 狮城节点, <<: *u, filter: "(?i)新加坡|狮城|SG|Singapore"}
+  - {name: 🇸🇬 Singapore, <<: *u, filter: "(?i)新加坡|狮城|SG|Singapore"}
 
-  - {name: 🇯🇵 日本节点, <<: *u, filter: "(?i)日本|日|JP|Japan"}
+  - {name: 🇯🇵 Japan, <<: *u, filter: "(?i)日本|日|JP|Japan"}
 
-  - {name: 🇺🇲 美国节点, <<: *u, filter: "(?i)美|US|United States"}
+  - {name: 🇺🇲 US, <<: *u, filter: "(?i)美|US|United States"}
 
-  - {name: 🌎️ 其它节点, <<: *u, filter: "(?i)^(?!.*(?:港|HK|Hong Kong|日|JP|Japan|美|US|United States|坡|SG|Singapore|台|TW|Taiwan)).*"}
+  - {name: 🌎️ Other, <<: *u, filter: "(?i)^(?!.*(?:港|HK|Hong Kong|日|JP|Japan|美|US|United States|坡|SG|Singapore|台|TW|Taiwan)).*"}
 
 rule-providers:
   Telegram:
@@ -117,7 +118,7 @@ rule-providers:
   Netflix:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_Classical.yaml"
     path: ./ruleset/Netflix.yaml
     interval: 86400
 
@@ -159,15 +160,8 @@ rule-providers:
   OpenAI:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/Shiyuu2233/shiyuu_sub/raw/master/Clash/private/OpenAI.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
     path: ./ruleset/OpenAI.yaml
-    interval: 86400
-
-  ChinaMax:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml"
-    path: ./ruleset/ChinaMax.yaml
     interval: 86400
 
   Lan:
@@ -177,10 +171,11 @@ rule-providers:
     path: ./ruleset/Lan.yaml
     interval: 86400
 
-
-
-
 rules:
+  - DOMAIN-KEYWORD,biligame,DIRECT
+  - DOMAIN-KEYWORD,bilibiligame,DIRECT
+  - PROCESS-NAME,BitComet.exe,DIRECT
+
   - RULE-SET,Lan,DIRECT
   - RULE-SET,Telegram,Telegram
   - RULE-SET,YouTube,YouTube
@@ -191,6 +186,7 @@ rules:
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,Steam,Steam
   - RULE-SET,OpenAI,ChatGPT
-  - RULE-SET,ChinaMax,DIRECT
+
   - GEOIP,CN,DIRECT
+  - GEOSITE,CN,DIRECT
   - MATCH,FINAL
