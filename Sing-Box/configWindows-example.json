@@ -9,9 +9,8 @@
 		"servers": [
 			{
 				"tag": "Cloudflare",
-				"address": "tls://1dot1dot1dot1.cloudflare-dns.com",
+				"address": "https://1.1.1.1/dns-query",
 				"strategy": "prefer_ipv4",
-				"address_resolver": "Cloudflare_ip",
 				"detour": "Proxy"
 			},
 			{
@@ -21,13 +20,9 @@
 				"detour": "Direct"
 			},
 			{
-				"tag": "Cloudflare_ip",
-				"address": "1.1.1.1"
-			},
-			{
-                "tag": "Dns_block",
-                "address": "rcode://success"
-            },
+                		"tag": "Dns_block",
+                		"address": "rcode://success"
+            		},
 			{
 				"tag": "fakedns",
 				"address": "fakeip"
