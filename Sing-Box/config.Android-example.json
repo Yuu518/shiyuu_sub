@@ -8,8 +8,7 @@
     "servers": [
       {
         "tag": "Cloudflare",
-        "address": "https://dns.cloudflare.com/dns-query",
-        "address_resolver": "Cloudflare_ip",
+        "address": "https://1.1.1.1/dns-query",
         "strategy": "prefer_ipv4",
         "detour": "Proxy"
       },
@@ -22,10 +21,6 @@
       {
         "tag": "Block",
         "address": "rcode://success"
-      },
-      {
-        "tag": "Cloudflare_ip",
-        "address": "1.1.1.1"
       },
       {
         "tag": "fakedns",
